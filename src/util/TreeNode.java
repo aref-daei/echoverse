@@ -1,10 +1,10 @@
 package util;
 
 public class TreeNode<E> {
-    E element;
-    TreeNode<E> left;
-    TreeNode<E> right;
-    TreeNode<E> parent;
+    public E element;
+    public TreeNode<E> left;
+    public TreeNode<E> right;
+    public TreeNode<E> parent;
 
     public TreeNode(E element, TreeNode<E> parent) {
         this.element = element;
