@@ -88,8 +88,8 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return rebalance(node);
     }
 
-    public void delete(String id) {
-        root = delete(root, id);
+    public void delete(E e) {
+        root = delete(root, e.getId());
     }
 
     private TreeNode<E> delete(TreeNode<E> node, String id) {
@@ -148,29 +148,5 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         }
 
         return node;
-    }
-
-    public E search(String id) {
-        TreeNode<E> n = root;
-        while (n != null) {
-            int cmp = id.compareTo(n.element.getId());
-            if (cmp == 0) return n.element;
-            n = (cmp < 0) ? n.left : n.right;
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        inorder(root, sb);
-        return sb.toString().trim();
-    }
-
-    private void inorder(TreeNode<E> n, StringBuilder sb) {
-        if (n == null) return;
-        inorder(n.left, sb);
-        sb.append(n.element).append(" ");
-        inorder(n.right, sb);
     }
 }
