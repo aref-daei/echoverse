@@ -1,12 +1,23 @@
 package util;
 
 public class LinkedList<E> {
-    private Node<E> head;
-    private int size;
+    protected Node<E> head;
+    protected int size;
 
     public LinkedList() {
         this.head = null;
         this.size = 0;
+    }
+
+    public int getSize() {
+        return size;
+    }
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public void add(E e) {
+        addLast(e);
     }
 
     public void addFirst(E element) {
@@ -38,12 +49,30 @@ public class LinkedList<E> {
         return element;
     }
 
-    public E removeAtIndex(int idx) {
-        if (idx < 0 || idx >= size || head == null) return null;
+    public E remove() {
+        return removeFirst();
+    }
 
-        if (idx == 0) {
-            return removeFirst();
+    public E remove(E e) {
+        if (head == null) return null;
+        if (e.equals(head)) return removeFirst();
+
+        Node<E> current = head;
+        while (current.next != null) {
+            if (current.next.element.equals(e)) {
+                E element = current.next.element;
+                current.next = current.next.next;
+                size--;
+                return element;
+            }
+            current = current.next;
         }
+        return null;
+    }
+
+    public E remove(int idx) {
+        if (idx < 0 || idx >= size || head == null) return null;
+        if (idx == 0) return removeFirst();
 
         Node<E> current = head;
         for (int i = 0; i < idx - 1; i++) {
@@ -69,7 +98,7 @@ public class LinkedList<E> {
         return -1;
     }
 
-    public E getAtIndex(int idx) {
+    public E get(int idx) {
         if (idx < 0 || idx >= size) return null;
 
         Node<E> current = head;
@@ -79,26 +108,14 @@ public class LinkedList<E> {
         return current.element;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public Node<E> getHead() {
-        return head;
-    }
-
-    public void setHead(Node<E> head) {
-        this.head = head;
-        // محاسبه مجدد سایز
-        size = 0;
+    public boolean contains(E e) {
         Node<E> current = head;
         while (current != null) {
-            size++;
+            if (current.element.equals(e)) {
+                return true;
+            }
             current = current.next;
         }
-    }
-
-    public boolean isEmpty() {
-        return head == null;
+        return false;
     }
 }
