@@ -4,16 +4,16 @@ import model.Model;
 
 public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
 
-    private int height(TreeNode<E> n) {
+    private int height(TNode<E> n) {
         return n == null ? 0 : ((AvlNode<E>) n).height;
     }
 
-    private void updateHeight(TreeNode<E> n) {
+    private void updateHeight(TNode<E> n) {
         ((AvlNode<E>) n).height =
                 1 + Math.max(height(n.left), height(n.right));
     }
 
-    private int balance(TreeNode<E> n) {
+    private int balance(TNode<E> n) {
         return height(n.left) - height(n.right);
     }
 
@@ -21,9 +21,9 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return a.getId().compareTo(b.getId());
     }
 
-    private TreeNode<E> rotateRight(TreeNode<E> y) {
-        TreeNode<E> x = y.left;
-        TreeNode<E> t2 = x.right;
+    private TNode<E> rotateRight(TNode<E> y) {
+        TNode<E> x = y.left;
+        TNode<E> t2 = x.right;
 
         x.right = y;
         y.left = t2;
@@ -43,9 +43,9 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return x;
     }
 
-    private TreeNode<E> rotateLeft(TreeNode<E> x) {
-        TreeNode<E> y = x.right;
-        TreeNode<E> t2 = y.left;
+    private TNode<E> rotateLeft(TNode<E> x) {
+        TNode<E> y = x.right;
+        TNode<E> t2 = y.left;
 
         y.left = x;
         x.right = t2;
@@ -69,7 +69,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         root = insert(root, e, null);
     }
 
-    private TreeNode<E> insert(TreeNode<E> node, E e, TreeNode<E> parent) {
+    private TNode<E> insert(TNode<E> node, E e, TNode<E> parent) {
         if (node == null) {
             size++;
             return new AvlNode<>(e, parent);
@@ -92,7 +92,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         root = delete(root, e.getId());
     }
 
-    private TreeNode<E> delete(TreeNode<E> node, String id) {
+    private TNode<E> delete(TNode<E> node, String id) {
         if (node == null) return null;
 
         int cmp = id.compareTo(node.element.getId());
@@ -105,12 +105,12 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
             size--;
 
             if (node.left == null || node.right == null) {
-                TreeNode<E> temp = (node.left != null) ? node.left : node.right;
+                TNode<E> temp = (node.left != null) ? node.left : node.right;
                 if (temp != null) temp.parent = node.parent;
                 return temp;
             }
 
-            TreeNode<E> successor = min(node.right);
+            TNode<E> successor = min(node.right);
             node.element = successor.element;
             node.right = delete(node.right, successor.element.getId());
         }
@@ -119,12 +119,12 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return rebalance(node);
     }
 
-    private TreeNode<E> min(TreeNode<E> n) {
+    private TNode<E> min(TNode<E> n) {
         while (n.left != null) n = n.left;
         return n;
     }
 
-    private TreeNode<E> rebalance(TreeNode<E> node) {
+    private TNode<E> rebalance(TNode<E> node) {
         int b = balance(node);
 
         // LL
@@ -151,7 +151,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
     }
 
     public E search(String id) {
-        TreeNode<E> n = root;
+        TNode<E> n = root;
         while (n != null) {
             int cmp = id.compareTo(n.element.getId());
             if (cmp == 0) return n.element;
@@ -167,7 +167,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return sb.toString().trim();
     }
 
-    private void inorder(TreeNode<E> n, StringBuilder sb) {
+    private void inorder(TNode<E> n, StringBuilder sb) {
         if (n == null) return;
         inorder(n.left, sb);
         sb.append(n.element).append(" ");

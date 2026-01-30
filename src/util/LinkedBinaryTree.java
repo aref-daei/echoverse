@@ -2,7 +2,7 @@ package util;
 
 public class LinkedBinaryTree<E> {
 
-    protected TreeNode<E> root;
+    protected TNode<E> root;
     protected int size;
 
     public LinkedBinaryTree() {
@@ -18,31 +18,31 @@ public class LinkedBinaryTree<E> {
         return size == 0;
     }
 
-    public TreeNode<E> root() {
+    public TNode<E> root() {
         return root;
     }
 
-    public TreeNode<E> parent(TreeNode<E> node) {
+    public TNode<E> parent(TNode<E> node) {
         return node.parent;
     }
 
-    public TreeNode<E> left(TreeNode<E> node) {
+    public TNode<E> left(TNode<E> node) {
         return node.left;
     }
 
-    public TreeNode<E> right(TreeNode<E> node) {
+    public TNode<E> right(TNode<E> node) {
         return node.right;
     }
 
-    public boolean isInternal(TreeNode<E> node) {
+    public boolean isInternal(TNode<E> node) {
         return node.left != null || node.right != null;
     }
 
-    public boolean isExternal(TreeNode<E> node) {
+    public boolean isExternal(TNode<E> node) {
         return node.left == null && node.right == null;
     }
 
-    public boolean isRoot(TreeNode<E> node) {
+    public boolean isRoot(TNode<E> node) {
         return node == root;
     }
 
@@ -50,27 +50,27 @@ public class LinkedBinaryTree<E> {
         if (!isEmpty())
             throw new IllegalStateException("Tree already has a root");
 
-        root = new TreeNode<>(element, null);
+        root = new TNode<>(element, null);
         size = 1;
     }
 
-    public void addLeft(TreeNode<E> parent, E element) {
+    public void addLeft(TNode<E> parent, E element) {
         if (parent.left != null)
             throw new IllegalArgumentException("Left child already exists");
 
-        parent.left = new TreeNode<>(element, parent);
+        parent.left = new TNode<>(element, parent);
         size++;
     }
 
-    public void addRight(TreeNode<E> parent, E element) {
+    public void addRight(TNode<E> parent, E element) {
         if (parent.right != null)
             throw new IllegalArgumentException("Right child already exists");
 
-        parent.right = new TreeNode<>(element, parent);
+        parent.right = new TNode<>(element, parent);
         size++;
     }
 
-    public E set(TreeNode<E> node, E element) {
+    public E set(TNode<E> node, E element) {
         E old = node.element;
         node.element = element;
         return old;
