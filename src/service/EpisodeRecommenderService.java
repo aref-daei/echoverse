@@ -19,9 +19,9 @@ public class EpisodeRecommenderService {
         LinkedList<Episode> recEpisodes = new LinkedList<>();
 
         for (int i = 0; i < length - 1; i++) {
-            Episode ep1 = episodes.getAtIndex(i);
+            Episode ep1 = episodes.get(i);
             for (int j = 0; j < length - 1; j++) {
-                Episode ep2 = episodes.getAtIndex(j);
+                Episode ep2 = episodes.get(j);
                 int affinity = calculateAffinity(ep1, ep2);
                 affinities[i][j] = affinity;
             }
@@ -41,7 +41,7 @@ public class EpisodeRecommenderService {
         }
 
         for (int i = 0; i < length - 1; i++) {
-            recEpisodes.addFirst(episodes.getAtIndex(i));
+            recEpisodes.addFirst(episodes.get(i));
         }
 
         return recEpisodes;
