@@ -1,18 +1,18 @@
 package model;
 
 public class ProductionTeam extends Model {
-    private Crew[] crews;
+    private String name;
 
-    public ProductionTeam(String id, Crew[] crews) {
+    public ProductionTeam(String id, String name) {
         super(id);
-        this.crews = crews;
+        this.name = name;
     }
 
-    public Crew[] getCrews() {
-        return crews;
+    public String getCrews() {
+        return name;
     }
 
-    public void setCrews(Crew[] crews) {
-        this.crews = crews;
+    public void setCrews(String name) {
+        this.name = name;
     }
 }
