@@ -7,8 +7,18 @@ public class Queue<E> extends LinkedList<E> {
         this.tail = null;
     }
 
-    public void enqueue(E element) {
-        Node<E> newNode = new Node<>(element);
+    @Override
+    public void add(E e) {
+        offer(e);
+    }
+
+    @Override
+    public void addLast(E e) {
+        offer(e);
+    }
+
+    public void offer(E e) {
+        Node<E> newNode = new Node<>(e);
         if (tail == null) {
             head = tail = newNode;
         } else {
@@ -18,10 +28,8 @@ public class Queue<E> extends LinkedList<E> {
         size++;
     }
 
-    public E dequeue() {
-        if (isEmpty()) {
-            return null;
-        }
+    public E poll() {
+        if (isEmpty()) return null;
         E element = head.element;
         head = head.next;
         if (head == null) {
@@ -31,11 +39,17 @@ public class Queue<E> extends LinkedList<E> {
         return element;
     }
 
+    @Override
+    public E remove() {
+        return poll();
+    }
+
+    @Override
     public E remove(E element) {
         if (isEmpty()) return null;
         
         if (head.element.equals(element)) {
-            return dequeue();
+            return poll();
         }
         
         Node<E> current = head;
@@ -52,5 +66,12 @@ public class Queue<E> extends LinkedList<E> {
             current = current.next;
         }
         return null;
+    }
+
+    public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
+        return get(0);
     }
 }
