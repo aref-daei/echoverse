@@ -4,9 +4,8 @@ public class Stack<E> extends LinkedList<E> {
     public Stack() {
     }
 
-    public boolean push(E e) {
+    public void push(E e) {
         addFirst(e);
-        return true;
     }
 
     public E pop() {
