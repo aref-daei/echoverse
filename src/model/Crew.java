@@ -3,13 +3,11 @@ package model;
 public class Crew extends Model {
     private String name;
     private int age;
-    private boolean isSupervisor;
 
-    public Crew(String id, String name, int age, boolean isSupervisor) {
+    public Crew(String id, String name, int age) {
         super(id);
         this.name = name;
         this.age = age;
-        this.isSupervisor = isSupervisor;
     }
 
     public String getName() {
@@ -26,13 +24,5 @@ public class Crew extends Model {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public boolean isSupervisor() {
-        return isSupervisor;
-    }
-
-    public void setSupervisor(boolean supervisor) {
-        isSupervisor = supervisor;
     }
 }
