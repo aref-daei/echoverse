@@ -118,4 +118,15 @@ public class LinkedList<E> {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<E> current = head;
+        while (current != null) {
+            sb.append(current.element).append(" ");
+            current = current.next;
+        }
+        return sb.toString().trim();
+    }
 }
