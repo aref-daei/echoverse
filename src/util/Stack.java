@@ -9,16 +9,12 @@ public class Stack<E> extends LinkedList<E> {
     }
 
     public E pop() {
-        if (isEmpty()) {
-            return null;
-        }
+        if (isEmpty()) return null;
         return removeFirst();
     }
 
     public E peek() {
-        if (isEmpty()) {
-            return null;
-        }
-        return get(0);
+        if (isEmpty()) return null;
+        return getFirst();
     }
 }
