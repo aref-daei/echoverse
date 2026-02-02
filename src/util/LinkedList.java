@@ -1,7 +1,7 @@
 package util;
 
 public class LinkedList<E> {
-    public static class Node<E> {
+    protected static class Node<E> {
         public E element;
         public Node<E> next;
 
