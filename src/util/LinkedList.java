@@ -1,17 +1,30 @@
 package util;
 
 public class LinkedList<E> {
+    public static class Node<E> {
+        public E element;
+        public Node<E> next;
+
+        public Node(E element) {
+            this.element = element;
+            this.next = null;
+        }
+    }
+
     protected Node<E> head;
-    protected int size;
+    protected Node<E> tail;
+    private int size;
 
     public LinkedList() {
         this.head = null;
+        this.tail = null;
         this.size = 0;
     }
 
     public int getSize() {
         return size;
     }
+
     public boolean isEmpty() {
         return head == null;
     }
@@ -31,12 +44,10 @@ public class LinkedList<E> {
         Node<E> newNode = new Node<>(element);
         if (head == null) {
             head = newNode;
+            tail = newNode;
         } else {
-            Node<E> current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
+            tail.next = newNode;
+            tail = newNode;
         }
         size++;
     }
@@ -45,7 +56,36 @@ public class LinkedList<E> {
         if (head == null) return null;
         E element = head.element;
         head = head.next;
+        if (head == null) {
+            tail = null;
+        }
         size--;
+        return element;
+    }
+
+    public E removeLast() {
+        if (head == null) return null;
+
+        // Just one element
+        if (head == tail) {
+            E element = head.element;
+            head = null;
+            tail = null;
+            size--;
+            return element;
+        }
+
+        // More than one element
+        Node<E> current = head;
+        while (current.next != tail) {
+            current = current.next;
+        }
+
+        E element = tail.element;
+        current.next = null;
+        tail = current;
+        size--;
+
         return element;
     }
 
@@ -73,6 +113,7 @@ public class LinkedList<E> {
     public E remove(int idx) {
         if (idx < 0 || idx >= size || head == null) return null;
         if (idx == 0) return removeFirst();
+        if (idx == size - 1) return removeLast();
 
         Node<E> current = head;
         for (int i = 0; i < idx - 1; i++) {
