@@ -44,11 +44,10 @@ public class LinkedList<E> {
         Node<E> newNode = new Node<>(element);
         if (head == null) {
             head = newNode;
-            tail = newNode;
         } else {
             tail.next = newNode;
-            tail = newNode;
         }
+        tail = newNode;
         size++;
     }
 
@@ -147,6 +146,16 @@ public class LinkedList<E> {
             current = current.next;
         }
         return current.element;
+    }
+
+    public E getFirst() {
+        if (head == null) return null;
+        return get(0);
+    }
+
+    public E getLast() {
+        if (tail == null) return null;
+        return get(size - 1);
     }
 
     public boolean contains(E e) {
