@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Objects;
-
 public class LinkedBinaryTree<E> {
 
     protected static class Node<E> {
@@ -173,30 +171,20 @@ public class LinkedBinaryTree<E> {
     }
 
     private boolean equals(E a, E b) {
-        return Objects.equals(a, b);
+        return a == null ? b == null : a.equals(b);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        buildString(root, sb, "", "");
+        inOrder(root, sb);
         return sb.toString();
     }
 
-    private void buildString(Node<E> node, StringBuilder sb, String prefix, String childrenPrefix) {
-        if (node != null) {
-            sb.append(prefix);
-            sb.append(node.element);
-            sb.append("\n");
-
-            if (node.left != null || node.right != null) {
-                if (node.right != null) {
-                    buildString(node.right, sb, childrenPrefix + "├── ", childrenPrefix + "│   ");
-                }
-                if (node.left != null) {
-                    buildString(node.left, sb, childrenPrefix + "└── ", childrenPrefix + "    ");
-                }
-            }
-        }
+    private void inOrder(Node<E> node, StringBuilder sb) {
+        if (node == null) return;
+        inOrder(node.left, sb);
+        sb.append(node.element).append("\n");
+        inOrder(node.right, sb);
     }
 }
