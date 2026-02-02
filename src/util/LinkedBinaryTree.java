@@ -32,6 +32,37 @@ public class LinkedBinaryTree<E> {
         return node == root;
     }
 
+    public void add(E element) {
+        if (root == null) {
+            root = new Node<>(element, null);
+            size = 1;
+            return;
+        }
+
+        Queue<Node<E>> queue = new Queue<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<E> current = queue.poll();
+
+            if (current.left == null) {
+                current.left = new Node<>(element, current);
+                size++;
+                return;
+            } else {
+                queue.offer(current.left);
+            }
+
+            if (current.right == null) {
+                current.right = new Node<>(element, current);
+                size++;
+                return;
+            } else {
+                queue.offer(current.right);
+            }
+        }
+    }
+
     public void addRoot(E element) {
         if (!isEmpty()) {
             throw new IllegalStateException("Tree already has a root");

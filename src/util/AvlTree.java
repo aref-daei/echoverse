@@ -119,6 +119,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return n;
     }
 
+    @Override
     public void add(E element) {
         if (root == null) {
             root = new AvlNode<>(element, null);
