@@ -11,7 +11,7 @@ public class EpisodeRecommenderService {
 
     public EpisodeRecommenderService(LinkedList<Episode> episodes) {
         this.episodes = episodes;
-        this.length = episodes.getSize();
+        this.length = episodes.size();
         this.affinities = new int[length][length];
     }
 

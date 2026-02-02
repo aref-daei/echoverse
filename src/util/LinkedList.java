@@ -21,12 +21,12 @@ public class LinkedList<E> {
         this.size = 0;
     }
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 
     public boolean isEmpty() {
-        return head == null;
+        return size == 0;
     }
 
     public void add(E e) {
@@ -149,12 +149,10 @@ public class LinkedList<E> {
     }
 
     public E getFirst() {
-        if (head == null) return null;
         return get(0);
     }
 
     public E getLast() {
-        if (tail == null) return null;
         return get(size - 1);
     }
 
