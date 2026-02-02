@@ -10,10 +10,6 @@ public class LinkedBinaryTree<E> {
             this.element = element;
             this.parent = parent;
         }
-
-        boolean hasChildren() {
-            return left != null || right != null;
-        }
     }
 
     protected Node<E> root;
@@ -30,14 +26,6 @@ public class LinkedBinaryTree<E> {
 
     public boolean isEmpty() {
         return size == 0;
-    }
-
-    protected boolean isInternal(Node<E> node) {
-        return node.left != null || node.right != null;
-    }
-
-    protected boolean isExternal(Node<E> node) {
-        return node.left == null && node.right == null;
     }
 
     protected boolean isRoot(Node<E> node) {
