@@ -2,105 +2,98 @@ package util;
 
 import model.Model;
 
-public class MinHeap<E extends Model> extends LinkedList<E> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MinHeap<E extends Model> {
+    private final List<E> heap;
+
     public MinHeap() {
+        heap = new ArrayList<>();
+    }
+
+    public int size() {
+        return heap.size();
+    }
+
+    public boolean isEmpty() {
+        return heap.isEmpty();
     }
 
     public void insert(E e) {
-        add(e);
-        heapifyUp(getSize() - 1);
+        heap.add(e);
+        heapifyUp(heap.size() - 1);
     }
 
     public E removeMin() {
         if (isEmpty()) return null;
 
-        E min = get(0);
-        E lastElement = remove(getSize() - 1);
+        E min = heap.getFirst();
+        E lastElement = heap.removeLast();
 
         if (!isEmpty()) {
-            set(0, lastElement);
+            heap.set(0, lastElement);
             heapifyDown(0);
         }
 
         return min;
     }
 
-    private void set(int idx, E e) {
-        if (idx < 0 || idx >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-        Node<E> current = head;
-        for (int i = 0; i < idx; i++) {
-            current = current.next;
-        }
-        current.element = e;
-    }
-
     public E getMin() {
         if (isEmpty()) return null;
-        return get(0);
+        return heap.getFirst();
     }
 
     private void heapifyUp(int index) {
-//        while (index > 0) {
-//            int parentIndex = (index - 1) / 2;
-//            if (get(index) < get(parentIndex)) {
-//                swap(index, parentIndex);
-//                index = parentIndex;
-//            } else {
-//                break;
-//            }
-//        }
+        while (index > 0) {
+            int parentIndex = (index - 1) / 2;
+            if (heap.get(index).compareTo(heap.get(parentIndex)) < 0) {
+                swap(index, parentIndex);
+                index = parentIndex;
+            } else {
+                break;
+            }
+        }
     }
 
     private void heapifyDown(int index) {
-//        while (true) {
-//            int leftChild = 2 * index + 1;
-//            int rightChild = 2 * index + 2;
-//            int smallest = index;
-//
-//            if (leftChild < getSize() && get(leftChild) < get(smallest)) {
-//                smallest = leftChild;
-//            }
-//
-//            if (rightChild < getSize() && get(rightChild) < get(smallest)) {
-//                smallest = rightChild;
-//            }
-//
-//            if (smallest != index) {
-//                swap(index, smallest);
-//                index = smallest;
-//            } else {
-//                break;
-//            }
-//        }
-    }
+        while (true) {
+            int leftChild = 2 * index + 1;
+            int rightChild = 2 * index + 2;
+            int smallest = index;
 
-    private int compareId(String id1, String id2) {
-        try {
-            int num1 = Integer.parseInt(id1);
-            int num2 = Integer.parseInt(id2);
-            return Integer.compare(num1, num2);
-        } catch (NumberFormatException e) {
-            return id1.compareTo(id2);
+            if (leftChild < heap.size() && heap.get(leftChild).compareTo(heap.get(smallest)) < 0) {
+                smallest = leftChild;
+            }
+
+            if (rightChild < heap.size() && heap.get(rightChild).compareTo(heap.get(smallest)) < 0) {
+                smallest = rightChild;
+            }
+
+            if (smallest != index) {
+                swap(index, smallest);
+                index = smallest;
+            } else {
+                break;
+            }
         }
     }
 
     private void swap(int i, int j) {
-        E temp = get(i);
-        set(i, get(j));
-        set(j, temp);
+        E temp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, temp);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getSize(); i++) {
-            sb.append(get(i).getId());
-            if (i < getSize() - 1) {
+        for (int i = 0; i < heap.size(); i++) {
+            sb.append(heap.get(i));
+            if (i < heap.size() - 1) {
                 sb.append(" ");
             }
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 }
