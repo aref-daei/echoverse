@@ -5,7 +5,6 @@ import util.LinkedList;
 public class Channel extends Model {
     private int title;
     private LinkedList<Episode> episodes;
-    private boolean isVerified;
 
     public Channel(String id, int title) {
         this(id, title, new LinkedList<>(), false);
@@ -19,7 +18,6 @@ public class Channel extends Model {
         super(id);
         this.title = title;
         this.episodes = episodes;
-        this.isVerified = isVerified;
     }
 
     public int getTitle() {
@@ -36,14 +34,6 @@ public class Channel extends Model {
 
     public void setEpisodes(LinkedList<Episode> episodes) {
         this.episodes = episodes;
-    }
-
-    public boolean isVerified() {
-        return isVerified;
-    }
-
-    public void setVerified(boolean verified) {
-        isVerified = verified;
     }
 
     public void addEpisode(Episode episode) {
