@@ -2,6 +2,7 @@ package util;
 
 public class Stack<E> extends LinkedList<E> {
     public Stack() {
+        super();
     }
 
     public void push(E e) {

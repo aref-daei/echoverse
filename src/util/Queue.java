@@ -2,6 +2,7 @@ package util;
 
 public class Queue<E> extends LinkedList<E> {
     public Queue() {
+        super();
     }
 
     public void offer(E e) {
