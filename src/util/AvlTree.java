@@ -129,9 +129,8 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
     }
 
     @Override
-    public E remove(E element) {
+    public void remove(E element) {
         root = delete((AvlNode<E>) root, element);
-        return root.element;
     }
 
     public E findById(String id) {

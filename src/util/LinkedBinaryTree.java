@@ -76,7 +76,7 @@ public class LinkedBinaryTree<E> {
         return e;
     }
 
-    public E remove(E element) {
+    public void remove(E element) {
         if (isEmpty()) {
             throw new IllegalStateException("Tree is empty");
         }
@@ -87,7 +87,6 @@ public class LinkedBinaryTree<E> {
         }
 
         Node<E> last = lastNode();
-        E removedElement = node.element;
 
         if (node != last) {
             node.element = last.element;
@@ -96,8 +95,6 @@ public class LinkedBinaryTree<E> {
         unlink(last);
         size--;
         if (size == 0) root = null;
-
-        return removedElement;
     }
 
     private void unlink(Node<E> node) {
