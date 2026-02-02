@@ -15,15 +15,15 @@ public class ChannelApprovalManagerService {
     }
 
     public void insert(Channel channel) {
-        channelTree.insert(channel);
+        channelTree.add(channel);
     }
 
     public void delete(Channel channel) {
-        channelTree.delete(channel);
+        channelTree.remove(channel);
     }
 
     public Channel search(String channelId) {
-        return channelTree.search(channelId);
+        return channelTree.findById(channelId);
     }
 
     public String display() {
