@@ -7,12 +7,11 @@ public class Episode extends Model {
     private ProductionTeam productionTeam;
     private String language;
     private int duration;
-    private float rating;
     private int priority;
 
     public Episode(String id, String title, String genre, int year,
                    ProductionTeam productionTeam,
-                   String language, int duration, float rating, int priority) {
+                   String language, int duration, int priority) {
         super(id);
         this.title = title;
         this.genre = genre;
@@ -20,7 +19,6 @@ public class Episode extends Model {
         this.productionTeam = productionTeam;
         this.language = language;
         this.duration = duration;
-        this.rating = rating;
         this.priority = priority;
     }
 
@@ -70,14 +68,6 @@ public class Episode extends Model {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
     }
 
     public int getPriority() {
