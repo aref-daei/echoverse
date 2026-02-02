@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Model {
+public abstract class Model implements Comparable<Model> {
     private String id;
 
     public Model(String id) {
@@ -13,6 +13,11 @@ public abstract class Model {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(Model o) {
+        return this.id.compareTo(o.id);
     }
 
     @Override
