@@ -3,21 +3,21 @@ package util;
 public class LinkedBinaryTree<E> {
 
     protected static class Node<E> {
-        public E element;
-        public Node<E> left, right, parent;
+        E element;
+        Node<E> left, right, parent;
 
-        public Node(E element, Node<E> parent) {
+        Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
         }
 
-        public boolean hasChildren() {
+        boolean hasChildren() {
             return left != null || right != null;
         }
     }
 
     protected Node<E> root;
-    private int size;
+    protected int size;
 
     public LinkedBinaryTree() {
         root = null;
