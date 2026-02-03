@@ -25,6 +25,32 @@ public class MinHeap<E extends Model> {
         heapifyUp(heap.size() - 1);
     }
 
+    public E remove(E element) {
+        if (isEmpty()) return null;
+
+        int index = -1;
+        for (int i = 0; i < heap.size(); i++) {
+            if (element.compareTo(heap.get(i)) == 0) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) return null;
+
+        int lastIndex = heap.size() - 1;
+        if (index == lastIndex) {
+            return heap.removeLast();
+        }
+
+        heap.set(index, heap.removeLast());
+
+        heapifyUp(index);
+        heapifyDown(index);
+
+        return element;
+    }
+
     public E removeMin() {
         if (isEmpty()) return null;
 
