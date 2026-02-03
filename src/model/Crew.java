@@ -4,6 +4,10 @@ public class Crew extends Model {
     private String name;
     private int age;
 
+    public Crew(String id) {
+        this(id, null, 0);
+    }
+
     public Crew(String id, String name, int age) {
         super(id);
         this.name = name;
