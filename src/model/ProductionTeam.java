@@ -8,11 +8,16 @@ public class ProductionTeam extends Model {
         this.name = name;
     }
 
-    public String getCrews() {
+    public String getName() {
         return name;
     }
 
-    public void setCrews(String name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Name: %s", getName());
     }
 }

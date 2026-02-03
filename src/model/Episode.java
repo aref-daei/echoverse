@@ -83,4 +83,13 @@ public class Episode extends Model {
         Episode episode = (Episode) o;
         return Integer.compare(this.priority, episode.priority);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Title: %s  Id: %s  Genre: %s  Year: %s%nProd. Team: %s  Language: %s  Duration: %s",
+                getTitle(), getId(), getGenre(), getYear(),
+                getProductionTeam().getName(), getLanguage(), getDuration()
+        );
+    }
 }

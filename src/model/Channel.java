@@ -39,4 +39,9 @@ public class Channel extends Model {
     public void addEpisode(Episode episode) {
         episodes.addLast(episode);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Title: %s  Id: %s", getTitle(), getId());
+    }
 }

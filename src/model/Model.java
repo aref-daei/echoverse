@@ -35,6 +35,6 @@ public abstract class Model implements Comparable<Model> {
 
     @Override
     public String toString() {
-        return id;
+        return "Id: " + id;
     }
 }
