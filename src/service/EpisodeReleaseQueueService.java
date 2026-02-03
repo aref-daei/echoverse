@@ -1,26 +1,32 @@
 package service;
 
 import model.Episode;
+import util.MinHeap;
 
 public class EpisodeReleaseQueueService {
-    // MinHeap not complete
-    public EpisodeReleaseQueueService() {}
+    MinHeap<Episode> heap;
 
-    public void insert(Episode episode, int priority) {
+    public EpisodeReleaseQueueService() {
+        heap = new MinHeap<>();
+    }
+
+    public void insert(Episode episode) {
+        heap.insert(episode);
     }
 
     public Episode extractMin() {
-        return null;
+        return heap.removeMin();
     }
 
     public Episode delete(Episode episode) {
-        return null;
+        return heap.remove(episode);
     }
 
     public String display() {
-        return null;
+        return heap.toString();
     }
 
     public void HeapSort() {
+        System.out.println("Heap sort is performed automatically!");
     }
 }
