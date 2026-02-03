@@ -28,10 +28,6 @@ public class LinkedBinaryTree<E> {
         return size == 0;
     }
 
-    protected boolean isRoot(Node<E> node) {
-        return node == root;
-    }
-
     public void add(E element) {
         if (root == null) {
             root = new Node<>(element, null);
@@ -63,6 +59,23 @@ public class LinkedBinaryTree<E> {
         }
     }
 
+    public void add(E parent, E element) {
+        Node<E> node = find(parent);
+        if (node == null) {
+            throw new IllegalArgumentException("Parent not found");
+        }
+
+        if (node.left == null) {
+            node.left = new Node<>(element, node);
+        } else if (node.right == null) {
+            node.right = new Node<>(element, node);
+        } else {
+            throw new IllegalStateException("Parent already has two children");
+        }
+
+        size++;
+    }
+
     public void addRoot(E element) {
         if (!isEmpty()) {
             throw new IllegalStateException("Tree already has a root");
@@ -74,7 +87,7 @@ public class LinkedBinaryTree<E> {
     public void addLeft(E parent, E element) {
         Node<E> node = find(parent);
         if (node == null) {
-            throw new IllegalArgumentException("Parent cannot be null");
+            throw new IllegalArgumentException("Parent not found");
         }
         if (node.left != null) {
             throw new IllegalArgumentException("Left child already exists");
@@ -86,7 +99,7 @@ public class LinkedBinaryTree<E> {
     public void addRight(E parent, E element) {
         Node<E> node = find(parent);
         if (node == null) {
-            throw new IllegalArgumentException("Parent cannot be null");
+            throw new IllegalArgumentException("Parent not found");
         }
         if (node.right != null) {
             throw new IllegalArgumentException("Right child already exists");
