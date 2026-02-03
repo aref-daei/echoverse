@@ -216,4 +216,21 @@ public class LinkedBinaryTree<E> {
         sb.append(node.element).append("\n");
         inOrder(node.right, sb);
     }
+
+    public String displayTree() {
+        if (isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        printTree(root, 0, sb);
+        return sb.toString();
+    }
+
+    private void printTree(Node<E> node, int level, StringBuilder sb) {
+        if (node == null) return;
+
+        sb.append("   ".repeat(Math.max(0, level)));
+        sb.append("|-- ").append("ID: ").append(node.element);
+
+        printTree(node.left, level + 1, sb);
+        printTree(node.right, level + 1, sb);
+    }
 }
