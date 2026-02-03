@@ -199,6 +199,14 @@ public class LinkedBinaryTree<E> {
         return bfs(element);
     }
 
+    public E findByBfs(E element) {
+        return bfs(element).element;
+    }
+
+    public E findByDfs(E element) {
+        return dfs(element).element;
+    }
+
     private boolean equals(E a, E b) {
         return a == null ? b == null : a.equals(b);
     }
