@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import model.Channel;
 import model.Crew;
 import model.Episode;
@@ -9,6 +7,9 @@ import service.EpisodeRecommenderService;
 import service.EpisodeReleaseQueueService;
 import service.ProductionTeamManagerService;
 import util.LinkedList;
+
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,11 +22,10 @@ public class Main {
                 new ProductionTeam("PT-1", "Default Team")
         );
 
-        System.out.printf(
-                "%n%s%n%s%n%n",
-                "...::..::: Welcome to EchoVerse :::..::...",
-                "    © 2026 - Aref Daei, Shakiba Ahrari    "
-        );
+        clear();
+        System.out.printf("%n%s%n%s%n%n",
+                "..::.::: Welcome to EchoVerse :::.::..",
+                " (C) 2026 - Aref Daei, Shakiba Ahrari ");
 
         menu(input, channelService, recommendationPool, teamService, releaseQueueService);
     }
@@ -264,6 +264,19 @@ public class Main {
                 return raw.trim();
             }
             System.out.println("Input cannot be empty.");
+        }
+    }
+
+    public static void clear() {
+        try {
+            String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error clearing the console: " + e.getMessage());
         }
     }
 }
