@@ -1,13 +1,12 @@
 # EchoVerse – Data Structures Project
 
 ## Course
+
 Data Structures
 
 ## Author
-Aref Daei, Shakiba Ahrari – Computer Science Student
 
-## Language
-Java
+Aref Daei, Shakiba Ahrari – Computer Science Students
 
 ---
 
@@ -25,20 +24,24 @@ All data structures are implemented **manually** without using Java built-in col
 The project consists of four independent phases, each focusing on a specific data structure or algorithm:
 
 ### Phase 1 – Channel Management
+
 - Self-balanced Binary Search Tree
 - Manages authorized podcast channels
 - Supports insertion, deletion, search, and display operations
 
 ### Phase 2 – Recommendation System
+
 - Undirected weighted graph
 - Shortest path calculation using Dijkstra’s algorithm
 - Used to simulate podcast recommendations
 
 ### Phase 3 – Podcast Member Hierarchy
+
 - Tree-based hierarchical structure
 - Supports BFS and DFS for member search
 
 ### Phase 4 – Publishing Queue
+
 - Min-Heap based priority queue
 - Podcasts are published based on priority
 - Includes Heap Sort implementation
