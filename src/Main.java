@@ -23,7 +23,7 @@ public class Main {
         );
 
         clear();
-        System.out.printf("%n%s%n%s%n%n",
+        System.out.printf("%s\n%s\n\n",
                 "..::.::: Welcome to EchoVerse :::.::..",
                 " (C) 2026 - Aref Daei, Shakiba Ahrari ");
 
