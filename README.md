@@ -1,9 +1,5 @@
 # EchoVerse – Data Structures Project
 
-## Course
-
-Data Structures
-
 ## Author
 
 Aref Daei, Shakiba Ahrari – Computer Science Students
