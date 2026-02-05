@@ -22,18 +22,12 @@ public class Main {
         );
 
         System.out.printf(
-                "%s\n%s\n\n%s ",
+                "%n%s%n%s%n%n",
                 "...::..::: Welcome to EchoVerse :::..::...",
-                "    © 2026 - Aref Daei, Shakiba Ahrari    ",
-                "Do you want the menu to open? [y/N]"
+                "    © 2026 - Aref Daei, Shakiba Ahrari    "
         );
 
-        boolean isMenu = input.nextLine().equalsIgnoreCase("y");
-        if (isMenu) {
-            menu(input, channelService, recommendationPool, teamService, releaseQueueService);
-        } else {
-            command(input, channelService, recommendationPool, teamService, releaseQueueService);
-        }
+        menu(input, channelService, recommendationPool, teamService, releaseQueueService);
     }
 
     static void menu(
@@ -65,16 +59,6 @@ public class Main {
         System.out.println("Goodbye.");
     }
 
-    static void command(
-            Scanner input,
-            ChannelApprovalManagerService channelService,
-            LinkedList<Episode> recommendationPool,
-            ProductionTeamManagerService teamService,
-            EpisodeReleaseQueueService releaseQueueService
-    ) {
-        menu(input, channelService, recommendationPool, teamService, releaseQueueService);
-    }
-
     private static void channelMenu(Scanner input, ChannelApprovalManagerService channelService) {
         boolean back = false;
         while (!back) {
@@ -89,12 +73,12 @@ public class Main {
             switch (choice) {
                 case 1 -> {
                     String id = readText(input, "Channel id: ");
-                    int title = readInt(input, "Channel title (number): ");
+                    String title = readText(input, "Channel title: ");
                     channelService.insert(new Channel(id, title));
                 }
                 case 2 -> {
                     String id = readText(input, "Channel id to delete: ");
-                    channelService.delete(new Channel(id, 0));
+                    channelService.delete(new Channel(id, ""));
                 }
                 case 3 -> {
                     String id = readText(input, "Channel id to search: ");
