@@ -9,6 +9,10 @@ public class Episode extends Model {
     private int duration;
     private int priority;
 
+    public Episode(String id, String title) {
+        this(id, title, "", 0, null, "", 0, 0);
+    }
+
     public Episode(String id, String title, String genre, int year,
                    ProductionTeam productionTeam,
                    String language, int duration, int priority) {
