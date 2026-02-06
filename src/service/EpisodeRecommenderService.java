@@ -15,7 +15,7 @@ public class EpisodeRecommenderService {
         this.affinities = new int[length][length];
     }
 
-    public LinkedList<Episode> recommend(Episode episode, int n) {
+    public LinkedList<Episode> recommend(Episode episode, int count) {
         LinkedList<Episode> recEpisodes = new LinkedList<>();
 
         for (int i = 0; i < length - 1; i++) {
@@ -40,7 +40,7 @@ public class EpisodeRecommenderService {
             }
         }
 
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i < count - 1; i++) {
             recEpisodes.addFirst(episodes.get(i));
         }
 
