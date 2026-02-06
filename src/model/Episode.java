@@ -3,26 +3,21 @@ package model;
 public class Episode extends Model {
     private String title;
     private String genre;
-    private int year;
     private ProductionTeam productionTeam;
     private String language;
-    private int duration;
     private int priority;
 
     public Episode(String id, String title) {
-        this(id, title, "", 0, null, "", 0, 0);
+        this(id, title, "", new ProductionTeam("", ""), "", 0);
     }
 
-    public Episode(String id, String title, String genre, int year,
-                   ProductionTeam productionTeam,
-                   String language, int duration, int priority) {
+    public Episode(String id, String title, String genre, ProductionTeam productionTeam,
+                   String language, int priority) {
         super(id);
         this.title = title;
         this.genre = genre;
-        this.year = year;
         this.productionTeam = productionTeam;
         this.language = language;
-        this.duration = duration;
         this.priority = priority;
     }
 
@@ -42,14 +37,6 @@ public class Episode extends Model {
         this.genre = genre;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public ProductionTeam getProductionTeam() {
         return productionTeam;
     }
@@ -64,14 +51,6 @@ public class Episode extends Model {
 
     public void setLanguage(String language) {
         this.language = language;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public int getPriority() {
@@ -91,9 +70,9 @@ public class Episode extends Model {
     @Override
     public String toString() {
         return String.format(
-                "Title: %s  Id: %s  Genre: %s  Year: %s%nProd. Team: %s  Language: %s  Duration: %s",
-                getTitle(), getId(), getGenre(), getYear(),
-                getProductionTeam().getName(), getLanguage(), getDuration()
+                "Title: %s  Id: %s  Genre: %s%nProduction Team: %s  Language: %s",
+                getTitle(), getId(), getGenre(),
+                getProductionTeam().getName(), getLanguage()
         );
     }
 }
