@@ -19,18 +19,20 @@ public class Main {
         LinkedList<Episode> recommendationPool = new LinkedList<>();
         EpisodeReleaseQueueService releaseQueueService = new EpisodeReleaseQueueService();
         ProductionTeamManagerService teamService = new ProductionTeamManagerService(
-                new ProductionTeam("PT-1", "Default Team")
+                new ProductionTeam("PT1", "Default Team")
         );
 
-        clear();
-        System.out.printf("%s\n%s\n\n",
+        String welcomeMessage = String.format(
+                "%s%n%s%n%n%n",
                 "..::.::: Welcome to EchoVerse :::.::..",
-                " (C) 2026 - Aref Daei, Shakiba Ahrari ");
+                " (C) 2026 - Aref Daei, Shakiba Ahrari "
+        );
 
-        menu(input, channelService, recommendationPool, teamService, releaseQueueService);
+        menu(welcomeMessage, input, channelService, recommendationPool, teamService, releaseQueueService);
     }
 
     static void menu(
+            String welcomeMessage,
             Scanner input,
             ChannelApprovalManagerService channelService,
             LinkedList<Episode> recommendationPool,
@@ -39,35 +41,48 @@ public class Main {
     ) {
         boolean running = true;
         while (running) {
-            System.out.println("\n=== EchoVerse Main Menu ===");
-            System.out.println("1) Phase 1 - Channel Management (AVL)");
-            System.out.println("2) Phase 2 - Episode Recommendations (Graph)");
-            System.out.println("3) Phase 3 - Production Team Hierarchy (MemberTree)");
-            System.out.println("4) Phase 4 - Publishing Queue (MinHeap)");
-            System.out.println("0) Exit");
+            clear();
+            System.out.print(welcomeMessage);
+            System.out.printf(
+                    "%s%n%s%n%s%n%s%n%s%n%s%n%n",
+                    "=== EchoVerse Main Menu ===",
+                    "1) Phase 1 - Channel Management (AVL)",
+                    "2) Phase 2 - Episode Recommendations (Graph)",
+                    "3) Phase 3 - Production Team Hierarchy (MemberTree)",
+                    "4) Phase 4 - Publishing Queue (MinHeap)",
+                    "0) Exit"
+            );
 
             int choice = readInt(input, "Select an option: ");
             switch (choice) {
-                case 1 -> channelMenu(input, channelService);
-                case 2 -> recommendationMenu(input, recommendationPool);
-                case 3 -> teamMenu(input, teamService);
-                case 4 -> queueMenu(input, releaseQueueService);
+                case 1 -> channelMenu(welcomeMessage, input, channelService);
+                case 2 -> recommendationMenu(welcomeMessage, input, recommendationPool);
+                case 3 -> teamMenu(welcomeMessage, input, teamService);
+                case 4 -> queueMenu(welcomeMessage, input, releaseQueueService);
                 case 0 -> running = false;
-                default -> System.out.println("Invalid option. Try again.");
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    okey(input);
+                }
             }
         }
-        System.out.println("Goodbye.");
+        System.out.println("Exited.");
     }
 
-    private static void channelMenu(Scanner input, ChannelApprovalManagerService channelService) {
+    private static void channelMenu(String welcomeMessage, Scanner input, ChannelApprovalManagerService channelService) {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- Phase 1: Channel Management ---");
-            System.out.println("1) Insert channel");
-            System.out.println("2) Delete channel");
-            System.out.println("3) Search channel by id");
-            System.out.println("4) Display channels");
-            System.out.println("0) Back");
+            clear();
+            System.out.print(welcomeMessage);
+            System.out.printf(
+                    "%s%n%s%n%s%n%s%n%s%n%s%n%n",
+                    "--- Phase 1: Channel Management ---",
+                    "1) Insert channel",
+                    "2) Delete channel",
+                    "3) Search channel by id",
+                    "4) Display channels",
+                    "0) Back"
+            );
 
             int choice = readInt(input, "Select an option: ");
             switch (choice) {
@@ -84,22 +99,34 @@ public class Main {
                     String id = readText(input, "Channel id to search: ");
                     Channel channel = channelService.search(id);
                     System.out.println(channel == null ? "Not found." : channel);
+                    okey(input);
                 }
-                case 4 -> System.out.println(channelService.display());
+                case 4 -> {
+                    System.out.println(channelService.display());
+                    okey(input);
+                }
                 case 0 -> back = true;
-                default -> System.out.println("Invalid option. Try again.");
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    okey(input);
+                }
             }
         }
     }
 
-    private static void recommendationMenu(Scanner input, LinkedList<Episode> recommendationPool) {
+    private static void recommendationMenu(String welcomeMessage, Scanner input, LinkedList<Episode> recommendationPool) {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- Phase 2: Episode Recommendations ---");
-            System.out.println("1) Add episode to pool");
-            System.out.println("2) Recommend episodes");
-            System.out.println("3) Display pool");
-            System.out.println("0) Back");
+            clear();
+            System.out.print(welcomeMessage);
+            System.out.printf(
+                    "%s%n%s%n%s%n%s%n%s%n%n",
+                    "--- Phase 2: Episode Recommendations ---",
+                    "1) Add episode to pool",
+                    "2) Recommend episodes",
+                    "3) Display pool",
+                    "0) Back"
+            );
 
             int choice = readInt(input, "Select an option: ");
             switch (choice) {
@@ -107,6 +134,8 @@ public class Main {
                 case 2 -> {
                     if (recommendationPool.isEmpty()) {
                         System.out.println("Recommendation pool is empty.");
+                        System.out.print("Press Enter to return to menu...");
+                        input.nextLine();
                         break;
                     }
                     String id = readText(input, "Episode id to base recommendations on: ");
@@ -114,30 +143,43 @@ public class Main {
                     Episode seed = findEpisodeById(recommendationPool, id);
                     if (seed == null) {
                         System.out.println("Episode not found.");
+                        System.out.print("Press Enter to return to menu...");
+                        input.nextLine();
                         break;
                     }
                     EpisodeRecommenderService recommender = new EpisodeRecommenderService(recommendationPool);
-                    // Note: recommend() currently ignores n internally; passing count for future compatibility.
                     LinkedList<Episode> recs = recommender.recommend(seed, count);
                     System.out.println(recs.isEmpty() ? "No recommendations." : recs);
+                    okey(input);
                 }
-                case 3 -> System.out.println(recommendationPool.isEmpty() ? "No episodes." : recommendationPool);
+                case 3 -> {
+                    System.out.println(recommendationPool.isEmpty() ? "No episodes." : recommendationPool);
+                    okey(input);
+                }
                 case 0 -> back = true;
-                default -> System.out.println("Invalid option. Try again.");
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    okey(input);
+                }
             }
         }
     }
 
-    private static void teamMenu(Scanner input, ProductionTeamManagerService teamService) {
+    private static void teamMenu(String welcomeMessage, Scanner input, ProductionTeamManagerService teamService) {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- Phase 3: Production Team Hierarchy ---");
-            System.out.println("1) Add supervisor (root)");
-            System.out.println("2) Add crew under supervisor");
-            System.out.println("3) Remove crew");
-            System.out.println("4) Search crew (BFS/DFS)");
-            System.out.println("5) Display team tree");
-            System.out.println("0) Back");
+            clear();
+            System.out.print(welcomeMessage);
+            System.out.printf(
+                    "%s%n%s%n%s%n%s%n%s%n%s%n%s%n%n",
+                    "--- Phase 3: Production Team Hierarchy ---",
+                    "1) Add supervisor (root)",
+                    "2) Add crew under supervisor",
+                    "3) Remove crew",
+                    "4) Search crew (BFS/DFS)",
+                    "5) Display team tree",
+                    "0) Back"
+            );
 
             int choice = readInt(input, "Select an option: ");
             switch (choice) {
@@ -158,27 +200,40 @@ public class Main {
                     try {
                         Crew crew = teamService.searchById(mode.charAt(0), id);
                         System.out.println(crew == null ? "Not found." : crew);
+                        okey(input);
                     } catch (IllegalArgumentException ex) {
                         System.out.println("Invalid search type.");
+                        okey(input);
                     }
                 }
-                case 5 -> System.out.println(teamService.displayTeamTree());
+                case 5 -> {
+                    System.out.println(teamService.displayTeamTree());
+                    okey(input);
+                }
                 case 0 -> back = true;
-                default -> System.out.println("Invalid option. Try again.");
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    okey(input);
+                }
             }
         }
     }
 
-    private static void queueMenu(Scanner input, EpisodeReleaseQueueService releaseQueueService) {
+    private static void queueMenu(String welcomeMessage, Scanner input, EpisodeReleaseQueueService releaseQueueService) {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- Phase 4: Publishing Queue ---");
-            System.out.println("1) Insert episode into queue");
-            System.out.println("2) Extract next episode (min)");
-            System.out.println("3) Delete episode by id");
-            System.out.println("4) Display queue");
-            System.out.println("5) Heap sort (info)\n");
-            System.out.println("0) Back");
+            clear();
+            System.out.print(welcomeMessage);
+            System.out.printf(
+                    "%s%n%s%n%s%n%s%n%s%n%s%n%s%n%n",
+                    "--- Phase 4: Publishing Queue ---",
+                    "1) Insert episode into queue",
+                    "2) Extract next episode (min)",
+                    "3) Delete episode by id",
+                    "4) Display queue",
+                    "5) Heap sort (info)",
+                    "0) Back"
+            );
 
             int choice = readInt(input, "Select an option: ");
             switch (choice) {
@@ -186,16 +241,27 @@ public class Main {
                 case 2 -> {
                     Episode episode = releaseQueueService.extractMin();
                     System.out.println(episode == null ? "Queue is empty." : episode);
+                    okey(input);
                 }
                 case 3 -> {
                     String id = readText(input, "Episode id to delete: ");
                     Episode removed = releaseQueueService.delete(buildEpisodeStub(id));
                     System.out.println(removed == null ? "Episode not found." : removed);
+                    okey(input);
                 }
-                case 4 -> System.out.println(releaseQueueService.display());
-                case 5 -> releaseQueueService.HeapSort();
+                case 4 -> {
+                    System.out.println(releaseQueueService.display());
+                    okey(input);
+                }
+                case 5 -> {
+                    releaseQueueService.HeapSort();
+                    okey(input);
+                }
                 case 0 -> back = true;
-                default -> System.out.println("Invalid option. Try again.");
+                default -> {
+                    System.out.println("Invalid option. Try again.");
+                    okey(input);
+                }
             }
         }
     }
@@ -274,5 +340,10 @@ public class Main {
         } catch (IOException | InterruptedException e) {
             System.out.println("Error clearing the console: " + e.getMessage());
         }
+    }
+
+    public static void okey(Scanner input) {
+        System.out.print("Press Enter to return to menu...");
+        input.nextLine();
     }
 }
