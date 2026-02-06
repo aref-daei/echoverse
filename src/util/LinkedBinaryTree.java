@@ -215,7 +215,7 @@ public class LinkedBinaryTree<E> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         inOrder(root, sb);
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     private void inOrder(Node<E> node, StringBuilder sb) {
@@ -235,6 +235,7 @@ public class LinkedBinaryTree<E> {
     private void printTree(Node<E> node, int level, StringBuilder sb) {
         if (node == null) return;
 
+        if (level != 0) sb.append("\n");
         sb.append("   ".repeat(Math.max(0, level)));
         sb.append("|-- ").append("ID: ").append(node.element);
 

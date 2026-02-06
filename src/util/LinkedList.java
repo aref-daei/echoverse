@@ -172,7 +172,7 @@ public class LinkedList<E> {
         StringBuilder sb = new StringBuilder();
         Node<E> current = head;
         while (current != null) {
-            sb.append(current.element).append(" ");
+            sb.append(current.element).append("\n");
             current = current.next;
         }
         return sb.toString().trim();

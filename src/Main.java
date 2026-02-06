@@ -102,7 +102,8 @@ public class Main {
                     okey(input);
                 }
                 case 4 -> {
-                    System.out.println(channelService.display());
+                    String result = channelService.display();
+                    System.out.println(result.isEmpty() ? "No channels." : result);
                     okey(input);
                 }
                 case 0 -> back = true;
@@ -207,7 +208,8 @@ public class Main {
                     }
                 }
                 case 5 -> {
-                    System.out.println(teamService.displayTeamTree());
+                    String result = teamService.displayTeamTree();
+                    System.out.println(result.isEmpty() ? "No crews." : result);
                     okey(input);
                 }
                 case 0 -> back = true;
@@ -250,7 +252,8 @@ public class Main {
                     okey(input);
                 }
                 case 4 -> {
-                    System.out.println(releaseQueueService.display());
+                    String result = releaseQueueService.display();
+                    System.out.println(result.isEmpty() ? "No episodes." : result);
                     okey(input);
                 }
                 case 5 -> {
