@@ -204,27 +204,23 @@ public class Main {
         String id = readText(input, "Episode id: ");
         String title = readText(input, "Title: ");
         String genre = readText(input, "Genre: ");
-        int year = readInt(input, "Year: ");
         String teamId = readText(input, "Production team id: ");
         String teamName = readText(input, "Production team name: ");
         String language = readText(input, "Language: ");
-        int duration = readInt(input, "Duration (minutes): ");
         int priority = readInt(input, "Priority (lower is earlier): ");
         return new Episode(
                 id,
                 title,
                 genre,
-                year,
                 new ProductionTeam(teamId, teamName),
                 language,
-                duration,
                 priority
         );
     }
 
     private static Episode buildEpisodeStub(String id) {
         // Minimal stub for lookup/removal based on Model.equals(id).
-        return new Episode(id, "", "", 0, new ProductionTeam("", ""), "", 0, 0);
+        return new Episode(id, "");
     }
 
     private static Crew buildCrew(Scanner input) {
