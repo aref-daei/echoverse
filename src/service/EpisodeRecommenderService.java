@@ -18,9 +18,9 @@ public class EpisodeRecommenderService {
     public LinkedList<Episode> recommend(Episode episode, int count) {
         LinkedList<Episode> recEpisodes = new LinkedList<>();
 
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i < length; i++) {
             Episode ep1 = episodes.get(i);
-            for (int j = 0; j < length - 1; j++) {
+            for (int j = 0; j < length; j++) {
                 Episode ep2 = episodes.get(j);
                 int affinity = calculateAffinity(ep1, ep2);
                 affinities[i][j] = affinity;
@@ -30,8 +30,8 @@ public class EpisodeRecommenderService {
         ShortestPath shortestPath = new ShortestPath(length);
         int[] result = shortestPath.dijkstra(affinities, episodes.indexOf(episode));
 
-        for (int i = 0; i < length - 1; i++) {
-            for (int j = 0; j < length - 1; j++) {
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
                 if (result[j] > result[j + 1]) {
                     int temp = result[j];
                     result[j] = result[j + 1];
@@ -40,7 +40,7 @@ public class EpisodeRecommenderService {
             }
         }
 
-        for (int i = 0; i < count - 1; i++) {
+        for (int i = 0; i < count; i++) {
             recEpisodes.addFirst(episodes.get(i));
         }
 
