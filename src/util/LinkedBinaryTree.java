@@ -130,15 +130,66 @@ public class LinkedBinaryTree<E> {
             throw new IllegalArgumentException("Element not found");
         }
 
-        Node<E> last = lastNode();
+        removeNode(node);
+        size--;
 
-        if (node != last) {
-            node.element = last.element;
+        if (size == 0) root = null;
+    }
+
+    private void removeNode(Node<E> node) {
+        // case 1: leaf
+        if (node.left == null && node.right == null) {
+            unlink(node);
+            return;
         }
 
-        unlink(last);
-        size--;
-        if (size == 0) root = null;
+        // case 2: only left child
+        if (node.left != null && node.right == null) {
+            replaceWithChild(node, node.left);
+            return;
+        }
+
+        // case 3: only right child
+        if (node.left == null) {
+            replaceWithChild(node, node.right);
+            return;
+        }
+
+        // case 4: two children
+        // choose left subtree replacement
+        Node<E> replacement = node.left;
+
+        // attach right subtree
+        Node<E> rightMost = replacement;
+        while (rightMost.right != null) {
+            rightMost = rightMost.right;
+        }
+        rightMost.right = node.right;
+        node.right.parent = rightMost;
+
+        replaceWithChild(node, replacement);
+    }
+
+    private void replaceWithChild(Node<E> node, Node<E> child) {
+        if (node == root) {
+            root = child;
+            child.parent = null;
+            return;
+        }
+
+        Node<E> p = node.parent;
+
+        if (p.left == node) {
+            p.left = child;
+        } else {
+            p.right = child;
+        }
+
+        child.parent = p;
+
+        node.parent = null;
+        node.left = null;
+        node.right = null;
     }
 
     private void unlink(Node<E> node) {
@@ -146,9 +197,11 @@ public class LinkedBinaryTree<E> {
             root = null;
             return;
         }
+
         Node<E> p = node.parent;
         if (p.left == node) p.left = null;
         else p.right = null;
+
         node.parent = null;
     }
 
