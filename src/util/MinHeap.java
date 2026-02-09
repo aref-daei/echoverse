@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinHeap<E extends Model> {
+    // لیست برای نگه‌داری عناصر هیپ
     private final List<E> heap;
 
     public MinHeap() {
@@ -20,37 +21,35 @@ public class MinHeap<E extends Model> {
         return heap.isEmpty();
     }
 
+    // اضافه کردن عنصر جدید به هیپ
     public void insert(E e) {
         heap.add(e);
         heapifyUp(heap.size() - 1);
     }
 
+    // حذف یک عنصر خاص از هیپ
     public E remove(E element) {
         if (isEmpty()) return null;
 
-        int index = -1;
-        for (int i = 0; i < heap.size(); i++) {
-            if (element.equals(heap.get(i))) {
-                index = i;
-                break;
-            }
-        }
+        int index = heap.indexOf(element);
 
         if (index == -1) return null;
 
-        int lastIndex = heap.size() - 1;
-        if (index == lastIndex) {
+        if (index == heap.size() - 1) {
             return heap.removeLast();
         }
 
+        // جایگزینی با آخرین عنصر
         heap.set(index, heap.removeLast());
 
+        // اصلاح ساختار هیپ (HeapSort)
         heapifyUp(index);
         heapifyDown(index);
 
         return element;
     }
 
+    // حذف کوچک‌ترین عنصر هیپ
     public E removeMin() {
         if (isEmpty()) return null;
 
@@ -65,14 +64,18 @@ public class MinHeap<E extends Model> {
         return min;
     }
 
+    // گرفتن کوچک‌ترین عنصر بدون حذف
     public E getMin() {
         if (isEmpty()) return null;
         return heap.getFirst();
     }
 
+    // اصلاح هیپ به سمت بالا
     private void heapifyUp(int index) {
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
+
+            // اگر از والد کوچک‌تر بود جابه‌جا می‌شود
             if (heap.get(index).compareTo(heap.get(parentIndex)) < 0) {
                 swap(index, parentIndex);
                 index = parentIndex;
@@ -82,6 +85,7 @@ public class MinHeap<E extends Model> {
         }
     }
 
+    // اصلاح هیپ به سمت پایین
     private void heapifyDown(int index) {
         while (true) {
             int leftChild = 2 * index + 1;
@@ -105,12 +109,14 @@ public class MinHeap<E extends Model> {
         }
     }
 
+    // جابه‌جایی دو عنصر
     private void swap(int i, int j) {
         E temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
 
+    // نمایش عناصر هیپ
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

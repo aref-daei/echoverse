@@ -1,17 +1,20 @@
 package util;
 
 public class ShortestPath {
-    private final int V;
+    private final int V; // تعداد نودهای گراف
 
     public ShortestPath(int V) {
         this.V = V;
     }
 
     public int[] dijkstra(int[][] graph, int src) {
+        // آرایه فاصله هر نود از مبدا
         int[] dist = new int[V];
 
+        // مشخص می‌کند نود بررسی شده یا نه
         Boolean[] sptSet = new Boolean[V];
 
+        // مقداردهی اولیه فاصله‌ها
         for (int i = 0; i < V; i++) {
             dist[i] = Integer.MAX_VALUE;
             sptSet[i] = false;
@@ -19,6 +22,7 @@ public class ShortestPath {
 
         dist[src] = 0;
 
+        // اجرای الگوریتم
         for (int count = 0; count < V - 1; count++) {
             int u = minDistance(dist, sptSet);
 
@@ -32,9 +36,11 @@ public class ShortestPath {
                     dist[v] = dist[u] + graph[u][v];
         }
 
+        // برگرداندن فاصله‌ها
         return dist;
     }
 
+    // متد برای پیدا کردن نودی که کمترین فاصله را دارد
     private int minDistance(int[] dist, Boolean[] sptSet) {
         int min = Integer.MAX_VALUE, min_index = -1;
 

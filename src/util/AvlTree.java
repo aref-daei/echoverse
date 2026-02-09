@@ -4,6 +4,7 @@ import model.Model;
 
 public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
 
+    // نود درخت با ارتفاع مخصوص AVL
     protected static class AvlNode<E> extends Node<E> {
         int height;
 
@@ -13,6 +14,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         }
     }
 
+    // درج عنصر به صورت بازگشتی
     protected AvlNode<E> insert(AvlNode<E> node, E element) {
         if (node == null) {
             size++;
@@ -33,6 +35,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return balance(node);
     }
 
+    // حذف عنصر از درخت AVL
     protected AvlNode<E> delete(AvlNode<E> node, E element) {
         if (node == null) return null;
 
@@ -42,6 +45,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
             node.right = delete((AvlNode<E>) node.right, element);
         } else {
             size--;
+            // نود با یک یا صفر فرزند
             if (node.left == null || node.right == null) {
                 AvlNode<E> temp =
                         node.left != null ? (AvlNode<E>) node.left : (AvlNode<E>) node.right;
@@ -49,6 +53,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
                 temp.parent = node.parent;
                 return temp;
             } else {
+                // جایگزینی با جانشین inorder
                 AvlNode<E> successor = min((AvlNode<E>) node.right);
                 node.element = successor.element;
                 node.right = delete((AvlNode<E>) node.right, successor.element);
@@ -59,6 +64,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return balance(node);
     }
 
+    // متعادل‌سازی درخت
     protected AvlNode<E> balance(AvlNode<E> node) {
         int bf = balanceFactor(node);
 
@@ -76,6 +82,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return node;
     }
 
+    // چرخش راست
     protected AvlNode<E> rotateRight(AvlNode<E> y) {
         AvlNode<E> x = (AvlNode<E>) y.left;
         AvlNode<E> t2 = (AvlNode<E>) x.right;
@@ -89,6 +96,7 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return x;
     }
 
+    // چرخش چپ
     protected AvlNode<E> rotateLeft(AvlNode<E> x) {
         AvlNode<E> y = (AvlNode<E>) x.right;
         AvlNode<E> t2 = (AvlNode<E>) y.left;
@@ -102,23 +110,30 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         return y;
     }
 
+    // به‌روزرسانی ارتفاع نود
     protected void updateHeight(AvlNode<E> n) {
         n.height = Math.max(height(n.left), height(n.right)) + 1;
     }
 
+    // گرفتن ارتفاع نود
     protected int height(Node<E> n) {
         return n == null ? 0 : ((AvlNode<E>) n).height;
     }
 
+    // محاسبه فاکتور تعادل
     protected int balanceFactor(AvlNode<E> n) {
         return height(n.left) - height(n.right);
     }
 
+    // پیدا کردن کمترین مقدار
     protected AvlNode<E> min(AvlNode<E> n) {
-        while (n.left != null) n = (AvlNode<E>) n.left;
+        while (n.left != null) {
+            n = (AvlNode<E>) n.left;
+        }
         return n;
     }
 
+    // اضافه کردن عنصر
     @Override
     public void add(E element) {
         if (root == null) {
@@ -129,11 +144,13 @@ public class AvlTree<E extends Model> extends LinkedBinaryTree<E> {
         root = insert((AvlNode<E>) root, element);
     }
 
+    // حذف عنصر
     @Override
     public void remove(E element) {
         root = delete((AvlNode<E>) root, element);
     }
 
+    // جستجو بر اساس id
     public E findById(String id) {
         AvlNode<E> current = (AvlNode<E>) root;
         while (current != null) {

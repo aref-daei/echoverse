@@ -2,6 +2,7 @@ package util;
 
 public class LinkedBinaryTree<E> {
 
+    // نود درخت
     protected static class Node<E> {
         E element;
         Node<E> left, right, parent;
@@ -15,6 +16,7 @@ public class LinkedBinaryTree<E> {
     protected Node<E> root;
     protected int size;
 
+    // سازنده
     public LinkedBinaryTree() {
         root = null;
         size = 0;
@@ -28,6 +30,7 @@ public class LinkedBinaryTree<E> {
         return size == 0;
     }
 
+    // اضافه کردن عنصر به صورت level-order
     public void add(E element) {
         if (root == null) {
             root = new Node<>(element, null);
@@ -38,6 +41,7 @@ public class LinkedBinaryTree<E> {
         Queue<Node<E>> queue = new Queue<>();
         queue.offer(root);
 
+        // پیدا کردن اولین جای خالی
         while (!queue.isEmpty()) {
             Node<E> current = queue.poll();
 
@@ -59,6 +63,7 @@ public class LinkedBinaryTree<E> {
         }
     }
 
+    // اضافه کردن فرزند برای یک والد مشخص
     public void add(E parent, E element) {
         Node<E> node = find(parent);
         if (node == null) {
@@ -108,6 +113,7 @@ public class LinkedBinaryTree<E> {
         size++;
     }
 
+    // حذف آخرین نود در level-order
     public E remove() {
         if (isEmpty()) {
             throw new IllegalStateException("Tree is empty");
@@ -120,6 +126,7 @@ public class LinkedBinaryTree<E> {
         return e;
     }
 
+    // حذف یک عنصر مشخص با حفظ identity نود
     public void remove(E element) {
         if (isEmpty()) {
             throw new IllegalStateException("Tree is empty");
@@ -136,30 +143,30 @@ public class LinkedBinaryTree<E> {
         if (size == 0) root = null;
     }
 
+    // حذف نود با توجه به تعداد فرزندها
     private void removeNode(Node<E> node) {
-        // case 1: leaf
+        // نود برگ
         if (node.left == null && node.right == null) {
             unlink(node);
             return;
         }
 
-        // case 2: only left child
+        // فقط فرزند چپ
         if (node.left != null && node.right == null) {
             replaceWithChild(node, node.left);
             return;
         }
 
-        // case 3: only right child
+        // فقط فرزند راست
         if (node.left == null) {
             replaceWithChild(node, node.right);
             return;
         }
 
-        // case 4: two children
-        // choose left subtree replacement
+        // دو فرزند
         Node<E> replacement = node.left;
 
-        // attach right subtree
+        // اتصال زیر درخت راست
         Node<E> rightMost = replacement;
         while (rightMost.right != null) {
             rightMost = rightMost.right;
@@ -170,6 +177,7 @@ public class LinkedBinaryTree<E> {
         replaceWithChild(node, replacement);
     }
 
+    // جایگزین کردن نود با یکی از فرزندانش
     private void replaceWithChild(Node<E> node, Node<E> child) {
         if (node == root) {
             root = child;
@@ -192,6 +200,7 @@ public class LinkedBinaryTree<E> {
         node.right = null;
     }
 
+    // جدا کردن نود برگ
     private void unlink(Node<E> node) {
         if (node == root) {
             root = null;
@@ -205,6 +214,7 @@ public class LinkedBinaryTree<E> {
         node.parent = null;
     }
 
+    // پیدا کردن آخرین نود در level-order
     private Node<E> lastNode() {
         Queue<Node<E>> q = new Queue<>();
         q.offer(root);
@@ -218,6 +228,7 @@ public class LinkedBinaryTree<E> {
         return current;
     }
 
+    // جستجو به صورت BFS
     protected Node<E> bfs(E element) {
         if (root == null) return null;
 
@@ -233,6 +244,7 @@ public class LinkedBinaryTree<E> {
         return null;
     }
 
+    // جستجو به صورت DFS
     protected Node<E> dfs(E element) {
         if (root == null) return null;
 
@@ -248,22 +260,26 @@ public class LinkedBinaryTree<E> {
         return null;
     }
 
+    // متد اصلی جستجو
     protected Node<E> find(E element) {
         return bfs(element);
     }
 
+    // جستجو با BFS و برگرداندن عنصر
     public E findByBfs(E element) {
         Node<E> result = bfs(element);
         if (result == null) return null;
         return result.element;
     }
 
+    // جستجو با DFS و برگرداندن عنصر
     public E findByDfs(E element) {
         Node<E> result = dfs(element);
         if (result == null) return null;
         return result.element;
     }
 
+    // مقایسه امن عناصر
     private boolean equals(E a, E b) {
         return a == null ? b == null : a.equals(b);
     }
@@ -275,6 +291,7 @@ public class LinkedBinaryTree<E> {
         return sb.toString().trim();
     }
 
+    // پیمایش inorder برای نمایش درخت
     private void inOrder(Node<E> node, StringBuilder sb) {
         if (node == null) return;
         inOrder(node.left, sb);
@@ -282,6 +299,7 @@ public class LinkedBinaryTree<E> {
         inOrder(node.right, sb);
     }
 
+    // نمایش درخت به صورت گرافیکی
     public String displayTree() {
         if (isEmpty()) return "";
         StringBuilder sb = new StringBuilder();
@@ -289,6 +307,7 @@ public class LinkedBinaryTree<E> {
         return sb.toString();
     }
 
+    // چاپ درخت با تورفتگی
     private void printTree(Node<E> node, int level, StringBuilder sb) {
         if (node == null) return;
 
