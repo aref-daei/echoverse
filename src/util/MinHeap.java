@@ -117,7 +117,7 @@ public class MinHeap<E extends Model> {
         for (int i = 0; i < heap.size(); i++) {
             sb.append(heap.get(i));
             if (i < heap.size() - 1) {
-                sb.append(" ");
+                sb.append("\n");
             }
         }
         return sb.toString().trim();
