@@ -200,11 +200,15 @@ public class LinkedBinaryTree<E> {
     }
 
     public E findByBfs(E element) {
-        return bfs(element).element;
+        Node<E> result = bfs(element);
+        if (result == null) return null;
+        return result.element;
     }
 
     public E findByDfs(E element) {
-        return dfs(element).element;
+        Node<E> result = dfs(element);
+        if (result == null) return null;
+        return result.element;
     }
 
     private boolean equals(E a, E b) {
