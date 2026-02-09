@@ -16,6 +16,7 @@ public class EpisodeReleaseQueueService {
 
     public Episode extractMin() {
         return heap.removeMin();
+        // return heap.getMin();
     }
 
     public Episode delete(Episode episode) {
