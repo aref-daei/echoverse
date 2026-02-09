@@ -30,7 +30,7 @@ public class MinHeap<E extends Model> {
 
         int index = -1;
         for (int i = 0; i < heap.size(); i++) {
-            if (element.compareTo(heap.get(i)) == 0) {
+            if (element.equals(heap.get(i))) {
                 index = i;
                 break;
             }
