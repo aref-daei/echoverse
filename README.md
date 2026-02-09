@@ -62,8 +62,7 @@ Each data structure is implemented in a separate class, and `Main.java` is respo
 ## How to Run
 
 ```bash
-javac *.java
-java Main
+java src/Main.java
 ````
 
 ---
