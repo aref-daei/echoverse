@@ -191,14 +191,19 @@ public class Main {
                     Crew crew = buildCrew(input);
                     try {
                         teamService.addCrew(parent, crew);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Supervisor not exists.");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                         okey(input);
                     }
                 }
                 case 3 -> {
                     String id = readText(input, "Crew id to remove: ");
-                    teamService.removeCrew(new Crew(id));
+                    try {
+                        teamService.removeCrew(new Crew(id));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        okey(input);
+                    }
                 }
                 case 4 -> {
                     String mode = readText(input, "Search type [B]FS or [D]FS: ");
