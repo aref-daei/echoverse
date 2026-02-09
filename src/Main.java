@@ -189,7 +189,12 @@ public class Main {
                     String parentId = readText(input, "Supervisor id: ");
                     Crew parent = new Crew(parentId);
                     Crew crew = buildCrew(input);
-                    teamService.addCrew(parent, crew);
+                    try {
+                        teamService.addCrew(parent, crew);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Supervisor not exists.");
+                        okey(input);
+                    }
                 }
                 case 3 -> {
                     String id = readText(input, "Crew id to remove: ");
@@ -233,7 +238,7 @@ public class Main {
                     "2) Extract next episode (min)",
                     "3) Delete episode by id",
                     "4) Display queue",
-                    "5) Heap sort (info)",
+                    "5) Heap sort",
                     "0) Back"
             );
 
