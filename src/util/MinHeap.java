@@ -31,7 +31,13 @@ public class MinHeap<E extends Model> {
     public E remove(E element) {
         if (isEmpty()) return null;
 
-        int index = heap.indexOf(element);
+        int index = -1;
+        for (int i = 0; i < heap.size(); i++) {
+            if (element.equals(heap.get(i))) {
+                index = i;
+                break;
+            }
+        }
 
         if (index == -1) return null;
 
